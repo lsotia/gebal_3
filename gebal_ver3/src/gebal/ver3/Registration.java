@@ -99,9 +99,9 @@ public class Registration {
         try (FileWriter writer = new FileWriter(userDataFile)) {
             writer.write("이메일: " + email + "\n");
             writer.write("비밀번호: " + password + "\n");
-            System.out.println("사용자 데이터가 저장되었습니다.");
+            System.out.println("사용자 데이터 저장완료.");
         } catch (IOException e) {
-            System.out.println("사용자 데이터 저장에 실패하였습니다.");
+            System.out.println("사용자 데이터 저장실패.");
             e.printStackTrace();
         }
     }
