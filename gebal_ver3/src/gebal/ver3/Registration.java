@@ -16,9 +16,13 @@ public class Registration {
         System.out.print("이메일을 입력하세요: ");
         String email = scanner.nextLine();
 
-        // 동일한 이메일이 있는 경우 재입력 요청
-        while (isExistingEmail(email)) {
-            System.out.println("이미 존재하는 이메일입니다. 다른 이메일을 입력해주세요.");
+        // 동일한 이메일이 있는 경우 또는 올바른 이메일 형식이 아닌 경우 재입력 요청
+        while (isExistingEmail(email) || !isValidEmail(email) || !isValidEmailCheck(email)) {
+            if (isExistingEmail(email)) {
+                System.out.println("이미 존재하는 이메일입니다. 다른 이메일을 입력해주세요.");
+            } else {
+                System.out.println("올바른 이메일 형식이 아닙니다. 대문자, 숫자를 포함하고 8~12자 이내로 입력해주세요.");
+            }
             System.out.print("이메일을 입력하세요: ");
             email = scanner.nextLine();
         }
@@ -26,18 +30,16 @@ public class Registration {
         System.out.print("비밀번호를 입력하세요: ");
         String password = scanner.nextLine();
 
-        // 이메일 유효성 검사 및 회원가입 처리
-        if (isValidEmail(email) && isValidEmailCheck(email)) {
-            if (isValidPassword(password)) {
-                createUserDirectory(email);
-                saveUserData(email, password);
-                System.out.println("축 회원가입!");
-            } else {
-                System.out.println("비밀번호는 8~12자 이내로 입력해주세요.");
-            }
-        } else {
-            System.out.println("올바른 이메일 형식이 아닙니다. 대문자, 숫자를 포함하고 8~12자 이내로 입력해주세요.");
+        // 비밀번호 유효성 검사 및 회원가입 처리
+        while (!isValidPassword(password)) {
+            System.out.println("비밀번호는 8~12자 이내로 입력해주세요.");
+            System.out.print("비밀번호를 입력하세요: ");
+            password = scanner.nextLine();
         }
+
+        createUserDirectory(email);
+        saveUserData(email, password);
+        System.out.println("축 회원가입!");
 
         scanner.close();
     }
